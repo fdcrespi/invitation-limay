@@ -47,11 +47,13 @@ export default function Home() {
       if (res.status == 200) {
         setOpen(false);
         toast("Asistencia confirmada.", {
+          style: { backgroundColor: "#4caf50", color: "#fff" },
           action: {
             label: "Cerrar"
           }
         })
       } else {
+        console.log(res)
         toast("Intente nuevamente.", {
           action: {
             label: "Cerrar"
@@ -102,6 +104,7 @@ export default function Home() {
                 </Label>
                 <Input
                   id="phone"
+                  type="number"
                   name="phone"
                   placeholder="Telefono"
                   className="col-span-3"
