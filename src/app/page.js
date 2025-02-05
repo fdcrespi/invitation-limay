@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { createGuest } from "./lib/data";
+import { toast } from "sonner";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -43,8 +44,20 @@ export default function Home() {
     }
     try {
       const res = await createGuest(formData);
-      console.log(res);
-      setOpen(false);
+      if (res.status == 200) {
+        setOpen(false);
+        toast("Asistencia confirmada.", {
+          action: {
+            label: "Cerrar"
+          }
+        })
+      } else {
+        toast("Intente nuevamente.", {
+          action: {
+            label: "Cerrar"
+          }
+        })
+      }
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +71,7 @@ export default function Home() {
             <Button
               variant="outline"
               className="bg-lime-600 text-white font-semibold"
-              onClick={() => setOpen(true)}
+              onClick={() => {setOpen(true), setFormData({...formData, name: ""})}}
             >
               Confirmar asistencia
             </Button>

@@ -10,7 +10,8 @@ async function seedGuests(client) {
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         cantidad INTEGER DEFAULT 1,
-        phone VARCHAR(255) DEFAULT NULL
+        phone VARCHAR(255) DEFAULT NULL,
+        created_at DATE DEFAULT CURRENT_DATE
       );
     `;
 

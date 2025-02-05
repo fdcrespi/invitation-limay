@@ -1,5 +1,8 @@
+
+'use server'
 import { sql } from "@vercel/postgres";
-import { unstable_noStore } from "next/cache";
+import { revalidatePath, unstable_noStore } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function fetchGuests() {
   unstable_noStore();
@@ -13,7 +16,7 @@ export async function fetchGuests() {
 }
 
 export async function createGuest(formData) {
-  console.log(formData)
+  unstable_noStore();
   try {
     await sql`
       INSERT INTO guests
@@ -21,9 +24,8 @@ export async function createGuest(formData) {
       VALUES
         (${formData.name}, ${formData.phone}, ${parseInt(formData.cantidad)})
     `;
+    return { message: `Invitacion agregada`, status: 200}
   } catch (err) {
-    return { message: `Database Error: Failed to Create Invoice. ${err}` };
+    return { message: `Database Error: Failed to Create guests. ${err}`, status: 500 };
   }
-  revalidatePath('/');
-  redirect('/');
 }
