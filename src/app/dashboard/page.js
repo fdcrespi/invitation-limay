@@ -40,7 +40,7 @@ export default async function Dashboard() {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Nombre</TableHead>
-            <TableHead>Cantidad</TableHead>
+            <TableHead>Acompañante</TableHead>
             <TableHead className="text-right">Fecha</TableHead>
           </TableRow>
         </TableHeader>

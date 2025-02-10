@@ -17,6 +17,7 @@ import { AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { createGuest } from "./lib/data";
 import { toast } from "sonner";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -29,18 +30,25 @@ export default function Home() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (msgerr) setmsg(null)
+    if (msgerr) setmsg(null);
     setFormData({
       ...formData,
       [name]: value,
     });
   };
 
+  const handleChangeAcompaniante = (value) => {
+    setFormData({
+      ...formData,
+      cantidad: value,
+    });
+  }
+
   const handleSubmit = async (e) => {
     event.preventDefault();
     if (!formData.name) {
-      setmsg("El nombre no puede estar vacio")
-      return
+      setmsg("El nombre no puede estar vacio");
+      return;
     }
     try {
       const res = await createGuest(formData);
@@ -49,16 +57,16 @@ export default function Home() {
         toast("Asistencia confirmada.", {
           style: { backgroundColor: "#4caf50", color: "#fff" },
           action: {
-            label: "Cerrar"
-          }
-        })
+            label: "Cerrar",
+          },
+        });
       } else {
-        console.log(res)
+        console.log(res);
         toast("Intente nuevamente.", {
           action: {
-            label: "Cerrar"
-          }
-        })
+            label: "Cerrar",
+          },
+        });
       }
     } catch (error) {
       console.error(error);
@@ -73,7 +81,9 @@ export default function Home() {
             <Button
               variant="outline"
               className="bg-lime-600 text-white font-semibold"
-              onClick={() => {setOpen(true), setFormData({...formData, name: ""})}}
+              onClick={() => {
+                setOpen(true), setFormData({ ...formData, name: "" });
+              }}
             >
               Confirmar asistencia
             </Button>
@@ -111,7 +121,20 @@ export default function Home() {
                   onChange={handleChange}
                 />
               </div>
-              <div className="grid grid-cols-3 items-center gap-4">
+              <RadioGroup defaultValue="0" className="flex gap-4 mt-2" onValueChange={handleChangeAcompaniante}>
+                <Label className="text-left">Acompañantes</Label>
+                <div className="flex gap-2">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="0" id="option-one" name="acompaniante"/>
+                    <Label htmlFor="option-one">No</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="1" id="option-two" name="acompaniante"/>
+                    <Label htmlFor="option-two">1 (uno)</Label>
+                  </div>
+                </div>
+              </RadioGroup>
+              {/* <div className="grid grid-cols-3 items-center gap-4">
                 <Label htmlFor="cantidad" className="text-right">
                   Acompañantes
                 </Label>
@@ -132,20 +155,19 @@ export default function Home() {
                   <option value="4">4</option>
                   <option value="5">5</option>
                 </select>
-              </div>
+              </div> */}
             </div>
-            {
-              msgerr && 
+            {msgerr && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>Error</AlertTitle>
-                <AlertDescription>
-                  {msgerr}
-                </AlertDescription>
+                <AlertDescription>{msgerr}</AlertDescription>
               </Alert>
-            }
+            )}
             <DialogFooter>
-              <Button type="submit" onClick={handleSubmit}>Confirmar</Button>
+              <Button type="submit" onClick={handleSubmit}>
+                Confirmar
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
