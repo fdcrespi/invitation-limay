@@ -18,6 +18,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { createGuest } from "../lib/data";
+import Head from "next/head";
 
 export default function Especial() {
   const [open, setOpen] = useState(false);
@@ -42,7 +43,7 @@ export default function Especial() {
       ...formData,
       cantidad: value,
     });
-  }
+  };
 
   const handleSubmit = async (e) => {
     event.preventDefault();
@@ -74,67 +75,88 @@ export default function Especial() {
   };
 
   return (
-    <div className="bg">
-      <main className="main-bg h-[100dvh] flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild className="absolute bottom-16 right-5">
-            <Button
-              variant="outline"
-              className="bg-lime-600 text-white font-semibold"
-              onClick={() => {
-                setOpen(true), setFormData({ ...formData, name: "" });
-              }}
-            >
-              Confirmar asistencia
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] top-2 translate-y-0">
-            <DialogHeader>
-              <DialogTitle>Confirmar asistencia</DialogTitle>
-              <DialogDescription>
-                Complete los siguientes campos para confirmar su asistencia
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Nombre
-                </Label>
-                <Input
-                  id="name"
-                  name="name"
-                  className="col-span-3"
-                  placeholder="Nombre y apellido"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="phone" className="text-right">
-                  Tel.
-                </Label>
-                <Input
-                  id="phone"
-                  type="number"
-                  name="phone"
-                  placeholder="Telefono"
-                  className="col-span-3"
-                  onChange={handleChange}
-                />
-              </div>
-              <RadioGroup defaultValue="0" className="flex gap-4 mt-2" onValueChange={handleChangeAcompaniante}>
-                <Label className="text-left">Acompañantes</Label>
-                <div className="flex gap-2">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="0" id="option-one" name="acompaniante"/>
-                    <Label htmlFor="option-one">No</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="1" id="option-two" name="acompaniante"/>
-                    <Label htmlFor="option-two">1 (uno)</Label>
-                  </div>
+    <>
+      <Head>
+        <title>Invitación Especial - Evento Exclusivo</title>
+        <meta
+          name="description"
+          content="Confirma tu asistencia a nuestro evento exclusivo. No te lo pierdas."
+        />
+      </Head>
+
+      <div className="bg">
+        <main className="main-bg h-[100dvh] flex flex-col gap-8 row-start-2 items-center sm:items-start">
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild className="absolute bottom-16 right-5">
+              <Button
+                variant="outline"
+                className="bg-lime-600 text-white font-semibold"
+                onClick={() => {
+                  setOpen(true), setFormData({ ...formData, name: "" });
+                }}
+              >
+                Confirmar asistencia
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px] top-2 translate-y-0">
+              <DialogHeader>
+                <DialogTitle>Confirmar asistencia</DialogTitle>
+                <DialogDescription>
+                  Complete los siguientes campos para confirmar su asistencia
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Nombre
+                  </Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    className="col-span-3"
+                    placeholder="Nombre y apellido"
+                    onChange={handleChange}
+                  />
                 </div>
-              </RadioGroup>
-              {/* <div className="grid grid-cols-3 items-center gap-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="phone" className="text-right">
+                    Tel.
+                  </Label>
+                  <Input
+                    id="phone"
+                    type="number"
+                    name="phone"
+                    placeholder="Telefono"
+                    className="col-span-3"
+                    onChange={handleChange}
+                  />
+                </div>
+                <RadioGroup
+                  defaultValue="0"
+                  className="flex gap-4 mt-2"
+                  onValueChange={handleChangeAcompaniante}
+                >
+                  <Label className="text-left">Acompañantes</Label>
+                  <div className="flex gap-2">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="0"
+                        id="option-one"
+                        name="acompaniante"
+                      />
+                      <Label htmlFor="option-one">No</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="1"
+                        id="option-two"
+                        name="acompaniante"
+                      />
+                      <Label htmlFor="option-two">1 (uno)</Label>
+                    </div>
+                  </div>
+                </RadioGroup>
+                {/* <div className="grid grid-cols-3 items-center gap-4">
                 <Label htmlFor="cantidad" className="text-right">
                   Acompañantes
                 </Label>
@@ -156,22 +178,23 @@ export default function Especial() {
                   <option value="5">5</option>
                 </select>
               </div> */}
-            </div>
-            {msgerr && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{msgerr}</AlertDescription>
-              </Alert>
-            )}
-            <DialogFooter>
-              <Button type="submit" onClick={handleSubmit}>
-                Confirmar
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </main>
-    </div>
+              </div>
+              {msgerr && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>{msgerr}</AlertDescription>
+                </Alert>
+              )}
+              <DialogFooter>
+                <Button type="submit" onClick={handleSubmit}>
+                  Confirmar
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </main>
+      </div>
+    </>
   );
 }
