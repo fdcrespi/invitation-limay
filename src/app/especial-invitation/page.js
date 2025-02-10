@@ -15,11 +15,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertCircle } from "lucide-react";
 import { useState } from "react";
-import { createGuest } from "./lib/data";
 import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { createGuest } from "../lib/data";
 
-export default function Home() {
+export default function Especial() {
   const [open, setOpen] = useState(false);
   const [msgerr, setmsg] = useState(null);
   const [formData, setFormData] = useState({
@@ -121,6 +121,41 @@ export default function Home() {
                   onChange={handleChange}
                 />
               </div>
+              <RadioGroup defaultValue="0" className="flex gap-4 mt-2" onValueChange={handleChangeAcompaniante}>
+                <Label className="text-left">Acompañantes</Label>
+                <div className="flex gap-2">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="0" id="option-one" name="acompaniante"/>
+                    <Label htmlFor="option-one">No</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="1" id="option-two" name="acompaniante"/>
+                    <Label htmlFor="option-two">1 (uno)</Label>
+                  </div>
+                </div>
+              </RadioGroup>
+              {/* <div className="grid grid-cols-3 items-center gap-4">
+                <Label htmlFor="cantidad" className="text-right">
+                  Acompañantes
+                </Label>
+                <select
+                  id="cantidad"
+                  name="cantidad"
+                  title="Cantidad acompañantes"
+                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  value={formData.cantidad}
+                  aria-describedby="customer-error"
+                  required
+                  onChange={handleChange}
+                >
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div> */}
             </div>
             {msgerr && (
               <Alert variant="destructive">
